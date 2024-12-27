@@ -1,8 +1,9 @@
+import React from 'react';
+import BookingForm from './BookingForm';
+
 function Reservations() {
-  return (
-    <div>
-      <h2>Reservations</h2>
-    </div>
+  return(
+  <BookingForm />
   );
 }
 

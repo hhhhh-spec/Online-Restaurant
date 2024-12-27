@@ -10,11 +10,10 @@ function App() {
   return (
     <ChakraProvider>
         <Routes>
-          <Route path="/" element={<Home />}>
+          <Route path="/" element={<Home />} />
             <Route path="reservations" element={<Reservations />} />
             <Route path="order-online" element={<OrderOnline />} />
             <Route path="login" element={<Login />} />
-          </Route>
         </Routes>
     </ChakraProvider>
   );
