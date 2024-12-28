@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Reservations from './components/Reservations';
 import OrderOnline from './components/OrderOnline';
 import Login from './components/Login';
+import ConfirmedBooking from './components/ConfirmedBooking';
 function App() {
   return (
     <ChakraProvider>
@@ -14,6 +15,7 @@ function App() {
             <Route path="reservations" element={<Reservations />} />
             <Route path="order-online" element={<OrderOnline />} />
             <Route path="login" element={<Login />} />
+            <Route path="confirm-booking" element={<ConfirmedBooking />} />
         </Routes>
     </ChakraProvider>
   );
