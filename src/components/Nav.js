@@ -35,8 +35,7 @@ function Nav() {
         gap={6}
         p={6}
       >
-        <Image src={require('../images/Logo.png')} alt="logo" />
-        <Link to="/">Home</Link>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center'}}><Image src={require('../images/Logo.png')} alt="logo" /><span style={{ marginLeft: "12px" }}>Home</span></Link>
         <a href="/about" onClick={handleClick("about")}>About</a>
         <Link to="/reservations">Reservations</Link>
         <Link to="/order-online">Order Online</Link>

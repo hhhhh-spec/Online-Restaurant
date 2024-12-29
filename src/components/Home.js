@@ -1,13 +1,14 @@
 import Nav from './Nav';
 import Propa from './Propa';
-import Special from './Special';  
-
+import Special from './Special';
+import Testimonials from './Testimonials';
 function Home() {
   return (
      <>
-     <Nav />
+      <Nav />
       <Propa />
       <Special />
+      <Testimonials />
      </>
   );
 }

@@ -28,7 +28,7 @@ function Special() {
     <Box bg="white" p={4}>
     <Grid templateColumns="repeat(12, 1fr)" gap={4}>
     <GridItem colStart={3} colEnd={11}>
-    <VStack >
+    <VStack pb={8}>
         <HStack justify="space-between" pt="10" w="full" pb="50px">
         <Heading size="2xl" color="black">This Week Specials!</Heading>
         <Button bg="#F4CE14" color="black">Online Menu</Button>

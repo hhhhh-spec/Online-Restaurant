@@ -29,7 +29,7 @@ function BookingForm() {
             occasion: 'Birthday',
         },
         onSubmit: (values) => {
-            submitAPI(values) && navigate('/confirm-booking');
+            submitAPI(values) && navigate('/confirm-booking', {state: values});
         },
         validationSchema: Yup.object({
             resdate: Yup.date().min(new Date(), 'Please select a future date').required('Required'),
@@ -69,7 +69,7 @@ function BookingForm() {
 
     return (
         <VStack w="100vw" p={32} alignItems="flex-start" px="20vw" color="#495E57">
-            <Heading as="h1" id="contactme-section">
+            <Heading as="h1" id="booking-section">
                 Book now
             </Heading>
             <Box p={6} rounded="md" w="100%">
@@ -94,7 +94,7 @@ function BookingForm() {
                                     <option key={time} value={time} disabled={disabledTimes.includes(time)}
                                     style={disabledTimes.includes(time) ? { color: '#B0B0B0', backgroundColor: '#f0f0f0' } : {}}
                                     >
-                                        {time}
+                                        {time}{disabledTimes.includes(time) ? ' (Full)' : ''}
                                     </option>
                                 ))}
                             </Select>
@@ -123,6 +123,7 @@ function BookingForm() {
                         </FormControl>
                         <Button type="submit" width="full" bg="#495E57" color="#EDEFEE"
                             _hover={{ bg: "#F4CE14", color: "black" }}
+                            disabled={Object.keys(formik.errors).length > 0}
                         >
                             Submit
                         </Button>

@@ -1,5 +1,5 @@
 import { Box, Image, Flex, VStack, Heading, Text,Grid, GridItem, HStack, Button } from '@chakra-ui/react';
-
+import { Link } from 'react-router-dom';
 function Propa() {
   return (
     <Box bg="#495E57" pt="100px">
@@ -12,7 +12,9 @@ function Propa() {
         <Text color="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         Hinc probo epicurei ei vim. Ne imperdiet repudiare qui, meis nulla et eum. Vide repudiare scriptorem nec eu, paulo consul mel in. Sea eu graeco conceptam maiestatis, pro ridens graeco epicuri et.
         </Text>
-        <Button bg="#F4CE14" color="black">Reserve a table</Button>
+        <Link to="/reservations"><Button bg="#F4CE14" color="black"
+        _hover={{ bg: "#EE9972", color: "black" }}
+        >Reserve a table</Button></Link>
       </VStack>
       <Image src={require('../images/restauranfood.jpg')} alt="restaurant" width="250px" borderRadius="lg"/>
     </HStack>
