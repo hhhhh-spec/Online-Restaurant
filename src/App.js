@@ -7,9 +7,10 @@ import Reservations from './components/Reservations';
 import OrderOnline from './components/OrderOnline';
 import Login from './components/Login';
 import ConfirmedBooking from './components/ConfirmedBooking';
+import theme from './API/theme';
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Home />} />
             <Route path="reservations" element={<Reservations />} />

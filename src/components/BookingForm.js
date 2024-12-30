@@ -117,8 +117,8 @@ function BookingForm() {
                         <FormControl>
                             <FormLabel htmlFor="occasion">Occasion</FormLabel>
                             <Select id="occasion" name="occasion" {...formik.getFieldProps("occasion")} >
-                                <option value="birth" >Birthday</option>
-                                <option value="anniv">Anniversary</option>
+                                <option value="birthday" >Birthday</option>
+                                <option value="anniversary">Anniversary</option>
                             </Select>
                         </FormControl>
                         <Button type="submit" width="full" bg="#495E57" color="#EDEFEE"

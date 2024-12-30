@@ -4,18 +4,20 @@ import Rating from "../Widgets/Rating";
 
 function Card2({name, pesonalphoto, rating, foodphoto, foodname, content}) {
   return (
-    <Box bg="#FBDABB" borderRadius={8}>
-        <VStack p={4} justify={"center"} align={"flex-start"}>
+    <Box borderRadius={8} bg="white">
+        <VStack p={4} justify={"start"} align={"start"}>
             <HStack>
                 <Avatar size="xs" name={name} src={pesonalphoto} />
-                <Text>{name}</Text>
+                <Text color="#333333" fontSize="10px">{name}</Text>
             <Rating score={rating} />
             </HStack>
-            <HStack justify={"flex-start"} spacing={8}>
-            <Image src={foodphoto} alt="Placeholder Image" width="100px" borderRadius={2}/>
-            <Heading size="md" color="black">{foodname}</Heading>
+            <HStack justify={"flex-start"} spacing={6}>
+            <Image src={foodphoto} alt="Placeholder Image" width="80px" borderRadius={2}/>
+            <Text  color="#333333">{foodname}</Text>
             </HStack>
             <Textarea
+            color="#495E57"
+             border="none"
              sx={{
                 '&::-webkit-scrollbar': {
                   width: '2px', // 设置滚动条宽度
