@@ -11,7 +11,6 @@ import {
     Heading,
     Input,
     Select,
-    Textarea,
     VStack,
 } from "@chakra-ui/react";
 import * as Yup from 'yup';
