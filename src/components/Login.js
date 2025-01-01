@@ -4,10 +4,12 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import  useSubmit  from "../API/useSubmit";
 import {useAlertContext} from "../context/alertContext";
+import { useNavigate } from "react-router";
 
 function Login() {
   const { isLoading, response, submit } = useSubmit();
   const { onOpen,onClose } = useAlertContext();
+  let navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -30,6 +32,7 @@ useEffect(() => {
       onOpen(response.type, response.message);
       if(response.type === 'success'){
         formik.resetForm();
+        navigate('/');
       }
     }
     return () => {
