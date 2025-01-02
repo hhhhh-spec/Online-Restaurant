@@ -2,7 +2,7 @@ import { Grid, HStack, VStack, Button, Heading } from "@chakra-ui/react";
 import Card from "./Card";
 import React from "react";
 import ResponsiveGrid from "./ResponsiveGrid";
-
+import { Link } from 'react-router-dom';
 const speciallist = [
   {
     title: "Greek salad",
@@ -30,7 +30,9 @@ function Special() {
       <VStack pb="8" pt="8">
         <HStack justify="space-between" w="full" wrap="wrap" pb="8" pt="8">
           <Heading size="2xl" color="black">This Week Specials!</Heading>
-          <Button bg="#F4CE14" color="black">Online Menu</Button>
+          <Link to="/order-online"><Button bg="#F4CE14" color="black"
+            _hover={{ bg: "#EE9972", color: "black" }}
+          >Online Menu</Button></Link>
         </HStack>
         <Grid
           templateColumns=

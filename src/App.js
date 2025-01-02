@@ -11,7 +11,6 @@ import theme from './API/theme';
 import {AlertProvider} from './context/alertContext';
 import Alert from './components/Alert';
 
-
 function App() {
   return (
     <ChakraProvider theme={theme}>
