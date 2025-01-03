@@ -1,8 +1,10 @@
 import { useState } from "react";
 import React from "react";
-import { Heading, Box, Flex, Button, Text, Image, SimpleGrid, useToast, IconButton, Badge, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure } from '@chakra-ui/react';
-import { FaShoppingCart } from 'react-icons/fa';
+import { Heading, Box, Flex, Button, Text, Image, SimpleGrid, useToast, Badge, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure } from '@chakra-ui/react';
+import { addToCart } from '../redux/cartSlice';
+import { useDispatch } from 'react-redux';
 
+import { Cart } from "./Cart";
 
 const categories = ["main course", "appetizers", "desserts", "drinks"];
 const dishes = {
@@ -96,42 +98,20 @@ const dishes = {
 
 function OrderOnline() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [cart, setCart] = useState([]); // 管理购物车的状态
+  const dispatch = useDispatch();
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure(); // 控制购物车弹出层的打开与关闭
+  const handleAddToCart = (dish) => {
+    dispatch(addToCart(dish)); // 添加商品到购物车
 
-
-  // 添加到购物车
-  const addToCart = (dish) => {
-    setCart((cart) => {
-      if(cart.find((item) => item.title === dish.title)){
-        return cart.map((item) => {
-          if(item.title === dish.title){
-            return {...item, quantity: item.quantity + 1};
-          }
-          return item;
-        });
-      }
-      else{
-        return [...cart, {...dish, quantity: 1}];
-      }
-    }); // 将菜品加入购物车
+    // 显示 Toast 弹窗
     toast({
-      title: `${dish.title} 已加入购物车`,
-      description: `价格: ${dish.price}`,
-      status: 'success',
-      duration: 3000,
-      isClosable: true,
+      title: `${dish.title} added to cart!`,
+      description: `Price: ${dish.price}`,
+      status: 'success', // 弹窗状态，可以是 "success"、"error"、"warning"、"info"
+      duration: 3000, // 持续时间（毫秒）
+      isClosable: true, // 是否可关闭
     });
   };
-
-  // 获取购物车内的总数量
-  const getCartItemCount = () => cart.length;
-console.log(cart);
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.quantity * Number(item.price.slice(1)), 0).toFixed(2);
-  };
-
   return (
     <Flex h="100vh">
       {/* 侧栏 */}
@@ -165,7 +145,7 @@ console.log(cart);
                 bg="#F4CE14"
                 color="black"
                 size="sm"
-                onClick={() => addToCart(dish)} // 点击添加到购物车
+                onClick={() => handleAddToCart(dish)} // 点击添加到购物车
               >
                 Add to cart
               </Button>
@@ -173,60 +153,7 @@ console.log(cart);
           ))}
         </SimpleGrid>
       </Box>
-
-      {/* 购物车按钮 */}
-      <Button
-       leftIcon={<FaShoppingCart />}
-        position="fixed"
-        bottom="20px"
-        right="20px"
-        bg="#495E57"
-        color="white"
-        _hover={{ bg: "#EE9972", color: "black" }}
-        size="lg"
-        onClick={onOpen} // 点击打开购物车弹出层
-      >
-        Cart
-         {getCartItemCount() > 0 && (
-        <Badge colorScheme="red" fontSize="0.8em" position="absolute" top="-5px" right="-5px">
-          {getCartItemCount()}
-          </Badge>)}
-      </Button>
-
-      {/* 购物车弹出层 */}
-      <Drawer isOpen={isOpen} onClose={onClose} size="md">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader>Cart</DrawerHeader>
-          <DrawerBody>
-            {cart.length === 0 ? (
-              <Text>Shopping cart is empty</Text>
-            ) : (
-              <SimpleGrid columns={1} spacing={4}>
-                {cart.map((dish, index) => (
-                  <Box key={index} p="4" border="1px" borderColor="gray.300" borderRadius="md">
-                    <Text fontSize="xl">{dish.title}</Text>
-                    <Text>{dish.price}</Text>
-                    <Text>Quantity: {dish.quantity}</Text>
-                  </Box>
-                ))}
-              </SimpleGrid>
-            )}
-          </DrawerBody>
-          <DrawerFooter>
-          <Text fontSize="lg" fontWeight="bold" mr="8">
-          Total: $ {getTotalPrice()}
-        </Text>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button bg="#495E57"
-        color="white"
-        _hover={{ bg: "#EE9972", color: "black" }}>Go to checkout</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-
+      <Cart dir={false}/>
     </Flex>
   );
 }
