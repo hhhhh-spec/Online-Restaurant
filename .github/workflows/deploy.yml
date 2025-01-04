@@ -15,15 +15,16 @@ jobs:
         uses: actions/checkout@v2
 
       # 设置 SSH 密钥
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # GitHub Secrets 中存储的私钥
+      - name: Create SSH private key file
+        run: |
+          New-Item -ItemType File -Force -Path "C:\Users\runneradmin\.ssh\id_rsa"
+          $privateKey = "${{ secrets.SSH_PRIVATE_KEY }}"
+          $privateKey | Set-Content -Path "C:\Users\runneradmin\.ssh\id_rsa" -Force
 
       # 确保 SSH 密钥文件权限正确
       - name: Fix SSH file permissions
         run: |
-          icacls "C:\Users\runneradmin\.ssh\id_rsa" /inheritance:r /grant:r "runneradmin:F"
+          icacls "C:\Users\runneradmin\.ssh\id_rsa" /inheritance:r /grant:r "runneradmin:F"  # 设置权限
 
       # 添加目标主机到 known_hosts 以避免第一次连接时的提示
       - name: Add server to known hosts
