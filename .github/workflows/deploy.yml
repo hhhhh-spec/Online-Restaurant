@@ -30,8 +30,10 @@ jobs:
       - name: Add server to known hosts
         run: |
           ssh-keyscan -H 120.55.102.193 >> C:\Users\runneradmin\.ssh\known_hosts
-
-     - name: Pull changes from the server
+          
+ # SSH连接到服务器并拉取代码
+      - name: SSH into server and pull latest changes
         run: |
-          cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant
-          git pull origin master  # Pull the latest changes from the remote repository
+          # 登录到服务器并导航到项目目录，执行 git pull 拉取最新更改
+          ssh -i C:\Users\runneradmin\.ssh\id_rsa -o StrictHostKeyChecking=no Administrator@120.55.102.193 "cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant && git pull origin master"
+
