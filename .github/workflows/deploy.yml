@@ -34,4 +34,4 @@ jobs:
       # 使用 SSH 执行部署命令
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no Administrator@120.55.102.193 "cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant\build && git pull origin master && ./deploy.sh"
+          ssh Administrator@120.55.102.193 "echo 'SSH connection test'"
