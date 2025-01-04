@@ -41,7 +41,7 @@ useEffect(() => {
 }, [response]);
 
   return (
-    <VStack w="100vw" p={32} alignItems="flex-start" color="#495E57" px="20vw">
+    <VStack w="100vw" p={16} alignItems="flex-start" color="#495E57" px="20vw">
       <Heading as="h1" id="booking-section">
         Login
       </Heading>

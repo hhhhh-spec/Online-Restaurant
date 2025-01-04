@@ -1,28 +1,18 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import React from 'react';
 import {Image, HStack} from '@chakra-ui/react';
 import ResponsiveGrid from './ResponsiveGrid';
 
 function Nav() {
-  const handleClick = (anchor) => () => {
-    const id = `${anchor}-section`;
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
   return (
       <ResponsiveGrid padding="6">
       <HStack justify="space-between" w="full" wrap="wrap" fontWeight="bold">
         <Image src={require('../images/Logo.png')} alt="logo" />
-        <Link to="/">Home</Link>
-        <a href="#about" onClick={handleClick("about")}>About</a>
-        <Link to="/reservations">Reservations</Link>
-        <Link to="/order-online">Order Online</Link>
-        <Link to="/login">Login</Link>
+        <NavLink to="/"  className={({ isActive }) => (isActive ? 'active-link' : '')}>Home</NavLink>
+        <NavLink to="/about"   className={({ isActive }) => (isActive ? 'active-link' : '')}>About</NavLink>
+        <NavLink to="/reservations"   className={({ isActive }) => (isActive ? 'active-link' : '')}>Reservations</NavLink>
+        <NavLink to="/order-online"   className={({ isActive }) => (isActive ? 'active-link' : '')}>Order Online</NavLink>
+        <NavLink to="/login"   className={({ isActive }) => (isActive ? 'active-link' : '')}>Login</NavLink>
       </HStack>
       </ResponsiveGrid>
   );

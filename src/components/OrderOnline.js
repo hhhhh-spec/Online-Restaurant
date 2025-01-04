@@ -115,15 +115,25 @@ function OrderOnline() {
   return (
     <Flex h="100vh">
       {/* 侧栏 */}
-      <Box w="20%" bg="#EDEFEE" p="4">
+      <Box w="20%" bg="#EDEFEE" p={{ base: 2, md: 4 }}>
         {categories.map((category) => (
           <Button
+            fontSize={{ base: "sm", md: "md" }}
             key={category}
             w="100%"
             bg={category === selectedCategory ? '#495E57' : 'transparent'}
             color={category === selectedCategory ? 'white' : '#333333'}
             onClick={() => setSelectedCategory(category)}
             _hover={{ bg: "#EE9972", color: "black" }}
+            textAlign="left"
+            display="flex"    // 使按钮成为 flex 容器
+            justifyContent="flex-start" // 确保内容从左侧开始
+            whiteSpace="normal"
+            wordBreak="break-word"
+            pb={{ base: "0", md: "4" }}  // 在移动端减少底部padding，其他设备使用默认值
+            pt={{ base: "0", md: "4" }}  // 在移动端减少顶部padding，其他设备使用默认值
+            pl={{ base: "1", md: "4" }}  // 在移动端减少左边padding，其他设备使用默认值
+            pr={{ base: "1", md: "4" }}  // 在移动端减少右边padding，其他设备使用默认值
           >
             {category}
           </Button>
@@ -135,7 +145,7 @@ function OrderOnline() {
         <Text fontSize="2xl" fontWeight="bold" mb="4">
           {selectedCategory}
         </Text>
-        <SimpleGrid columns={4} spacing={4}>
+        <SimpleGrid columns={{ base: 1, md: 3, lg: 4 }} spacing={4}>
           {dishes[selectedCategory].map((dish, index) => (
             <Box key={index} border="1px" borderColor="gray.300" borderRadius="md" p="4" boxShadow="md">
               <Image src={dish.getImageSrc} alt={dish.title} boxSize="150px" objectFit="cover" borderRadius="md" />
@@ -153,7 +163,7 @@ function OrderOnline() {
           ))}
         </SimpleGrid>
       </Box>
-      <Cart dir={false}/>
+      <Cart dir={false} />
     </Flex>
   );
 }

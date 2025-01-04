@@ -5,7 +5,7 @@ function ConfirmedBooking() {
     const location = useLocation();
     const bookingData = location.state; // 获取传递的表单数据
     return (
-        <VStack w="100vw" p={32} alignItems="flex-start" px="20vw" color="#495E57">
+        <VStack w="100vw" p={16} alignItems="flex-start" px="20vw" color="#495E57">
             <Heading as="h1">Booking Confirmed!</Heading>
             <Text pb="4">Thank you for booking with us. We look forward to seeing you soon.</Text>
             <Box  rounded="md" w="100%" bg="#FBDABB">

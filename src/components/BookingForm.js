@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import { fetchAPI, submitAPI } from '../API/api';
 import {
-    Box,
+    Flex,
+    Grid,
     Button,
     FormControl,
     FormErrorMessage,
@@ -11,10 +12,9 @@ import {
     Heading,
     Input,
     Select,
-    VStack,
 } from "@chakra-ui/react";
 import * as Yup from 'yup';
-
+import ResponsiveGrid from './ResponsiveGrid';
 
 function BookingForm() {
     const [availableTimes, setAvailableTimes] = useState([]);
@@ -22,16 +22,18 @@ function BookingForm() {
     let navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
+            location:"indoor",
             resdate: new Date().toISOString().split('T')[0],
             restime: '17:00',
             guests: 5,
             occasion: 'Birthday',
         },
         onSubmit: (values) => {
-            submitAPI(values) && navigate('/confirm-booking', {state: values});
+            submitAPI(values) && navigate('/confirm-booking', { state: values });
         },
         validationSchema: Yup.object({
-            resdate: Yup.date().min(new Date(), 'Please select a future date').required('Required'),
+            location: Yup.string().required('Required'),
+            resdate: Yup.date().min(new Date(), '⚠️ Please select a future date').required('Required'),
             restime: Yup.string().required('Required'),
             guests: Yup.number().min(1, 'Minimum 1 guest').max(10, 'Maximum 10 guests').required('Required'),
             occasion: Yup.string().required('Required'),
@@ -67,31 +69,54 @@ function BookingForm() {
     }, [formik.values.resdate]);  // 依赖于日期变化
 
     return (
-        <VStack w="100vw" p={32} alignItems="flex-start" px="20vw" color="#495E57">
-            <Heading as="h1" id="booking-section">
-                Book now
+        <>
+        <ResponsiveGrid bgColor='#495E57' padding="10">
+            <Heading  id="booking-section" color="#F3CE14" size="2xl" p={4}>
+                Reservations
             </Heading>
-            <Box p={6} rounded="md" w="100%">
                 <form onSubmit={e => {
                     e.preventDefault();
-                    formik.handleSubmit();}}>
-                    <VStack spacing={4}>
+                    formik.handleSubmit();
+                }}>
+                    <Grid  gap={6}
+             templateColumns={{
+                base: "1fr",           // 小屏幕时 1 列
+                lg: "repeat(2, 1fr)"   // 大屏幕时 2 列
+              }}
+              templateRows={{
+                base: "repeat(4, 1fr)",  // 小屏幕时 6 行
+                lg: "repeat(2, 1fr)"     // 大屏幕时 3 行
+              }}
+            >
                         <FormControl isInvalid={formik.touched.resdate && formik.errors.resdate}>
-                            <FormLabel htmlFor="date">Choose date</FormLabel>
+                            <FormLabel htmlFor="date" color="white">Choose date</FormLabel>
                             <Input
                                 id="resdate"
                                 name="resdate"
                                 type='date'
                                 {...formik.getFieldProps("resdate")}
+                                _invalid={{
+                                    borderColor: '#EE9972'  // 错误时的边框颜色
+                                  }}
+                                  border="2px"
+                                  backgroundColor="white"
+                                  color="#495E57"
                             />
-                            <FormErrorMessage>{formik.errors.resdate}</FormErrorMessage>
+                            <FormErrorMessage color="#EE9972">{formik.errors.resdate}</FormErrorMessage>
                         </FormControl>
                         <FormControl>
-                            <FormLabel htmlFor="restime">Choose time</FormLabel>
-                            <Select id="restime" name="restime" {...formik.getFieldProps("restime")} >
+                            <FormLabel htmlFor="restime" color="white">Choose time</FormLabel>
+                            <Select id="restime" name="restime" {...formik.getFieldProps("restime")}
+                            _invalid={{
+                                borderColor: '#EE9972'  // 错误时的边框颜色
+                              }}
+                              border="2px"
+                              backgroundColor="white"
+                              color="#495E57"
+                            >
                                 {availableTimes.map(time => (
                                     <option key={time} value={time} disabled={disabledTimes.includes(time)}
-                                    style={disabledTimes.includes(time) ? { color: '#B0B0B0', backgroundColor: '#f0f0f0' } : {}}
+                                        style={disabledTimes.includes(time) ? { color: '#B0B0B0', backgroundColor: '#f0f0f0' } : {}}
                                     >
                                         {time}{disabledTimes.includes(time) ? ' (Full)' : ''}
                                     </option>
@@ -99,11 +124,17 @@ function BookingForm() {
                             </Select>
                         </FormControl>
                         <FormControl isInvalid={formik.touched.guests && formik.errors.guests}>
-                            <FormLabel htmlFor="guests">Number of guests</FormLabel>
+                            <FormLabel htmlFor="guests" color="white">Number of guests</FormLabel>
                             <select
                                 id="guests"
                                 name="guests"
                                 {...formik.getFieldProps("guests")}
+                                _invalid={{
+                                    borderColor: '#EE9972'  // 错误时的边框颜色
+                                  }}
+                                  border="2px"
+                                  backgroundColor="white"
+                                  color="#495E57"
                             >
                                 {Array.from({ length: 10 }, (_, index) => index + 1).map((num) => (
                                     <option key={num} value={num}>
@@ -114,22 +145,31 @@ function BookingForm() {
                             <FormErrorMessage>{formik.errors.guests}</FormErrorMessage>
                         </FormControl>
                         <FormControl>
-                            <FormLabel htmlFor="occasion">Occasion</FormLabel>
-                            <Select id="occasion" name="occasion" {...formik.getFieldProps("occasion")} >
+                            <FormLabel htmlFor="occasion" color="white">Occasion</FormLabel>
+                            <Select id="occasion" name="occasion" {...formik.getFieldProps("occasion")} 
+                            _invalid={{
+                                borderColor: '#EE9972'  // 错误时的边框颜色
+                              }}
+                              border="2px"
+                              backgroundColor="white"
+                              color="#495E57"
+                            >
                                 <option value="birthday" >Birthday</option>
                                 <option value="anniversary">Anniversary</option>
                             </Select>
                         </FormControl>
-                        <Button type="submit" width="full" bg="#495E57" color="#EDEFEE"
-                            _hover={{ bg: "#F4CE14", color: "black" }}
-                            disabled={Object.keys(formik.errors).length > 0}
-                        >
-                            Submit
-                        </Button>
-                    </VStack>
+                        </Grid>
                 </form>
-            </Box>
-        </VStack>
+        </ResponsiveGrid>
+        <Flex justify="center" p="10">
+        <Button type="submit" bg="#F4CE14" color="#333333" pl="10" pr="10"
+                            disabled={Object.keys(formik.errors).length > 0}
+                            fontWeight="bold"
+                        >
+                            Reserve a table
+                        </Button>
+                        </Flex>
+        </>
     );
 }
 
