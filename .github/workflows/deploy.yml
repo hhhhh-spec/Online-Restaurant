@@ -31,7 +31,7 @@ jobs:
         run: |
           ssh-keyscan -H 120.55.102.193 >> C:\Users\runneradmin\.ssh\known_hosts
 
-      # 使用 SSH 执行部署命令
-      - name: Deploy to server
+     - name: Pull changes from the server
         run: |
-          ssh -i C:\\Users\\runneradmin/.ssh/id_rsa -o StrictHostKeyChecking=no Administrator@120.55.102.193 "echo 'SSH connection test'"
+          cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant
+          git pull origin master  # Pull the latest changes from the remote repository
