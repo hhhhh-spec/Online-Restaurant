@@ -23,7 +23,7 @@ jobs:
       # 确保 SSH 密钥文件权限正确
       - name: Fix SSH file permissions
         run: |
-          icacls "C:\Users\runneradmin\.ssh\id_rsa" /inheritance:r /grant:r "%USERPROFILE%:F"
+          icacls "C:\Users\runneradmin\.ssh\id_rsa" /inheritance:r /grant:r "runneradmin:F"
 
       # 添加目标主机到 known_hosts 以避免第一次连接时的提示
       - name: Add server to known hosts
