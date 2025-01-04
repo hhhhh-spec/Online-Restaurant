@@ -1,47 +1,36 @@
-name: Deploy React App to Windows ECS
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - master  # 触发规则：当推送到 master 分支时触发部署流程
+      - master  # 你可以根据需求调整触发条件，例如推送到特定分支时触发部署
 
 jobs:
   deploy:
-    runs-on: windows-latest  # 在 GitHub Actions 的 Windows 环境下运行
-
+    runs-on: windows-latest  # 运行环境为 Windows
+    
     steps:
-      # 1. Checkout code
+      # Checkout代码
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Set up SSH key for secure communication with server
+      # 设置 SSH 密钥
       - name: Set up SSH key
-        run: |
-          # 创建 SSH 文件夹并添加私钥
-          mkdir C:\Users\runneradmin\.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > C:\Users\runneradmin\.ssh\id_rsa
-          # 确保权限是 600
-          icacls C:\Users\runneradmin\.ssh\id_rsa /inheritance:r
-          icacls C:\Users\runneradmin\.ssh\id_rsa /grant:r "${{ runner.os }}:(R)"
-          # 配置跳过主机验证
-          echo "Host *" > C:\Users\runneradmin\.ssh\config
-          echo "  StrictHostKeyChecking no" >> C:\Users\runneradmin\.ssh\config
-
-      # 3. Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          node-version: '14'  # 使用你项目需要的 Node.js 版本
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # GitHub Secrets 中存储的私钥
 
-      # 4. Install dependencies and build the React app
-      - name: Install dependencies and build
+      # 确保 SSH 密钥文件权限正确
+      - name: Fix SSH file permissions
         run: |
-          npm install
-          npm run build
+          icacls "C:\Users\runneradmin\.ssh\id_rsa" /inheritance:r /grant:r "%username%:F"  # 修改文件权限确保可访问
 
-      # 5. Deploy to Windows Server (ECS)
+      # 添加目标主机到 known_hosts 以避免第一次连接时的提示
+      - name: Add server to known hosts
+        run: |
+          ssh-keyscan -H 120.55.102.193 >> C:\Users\runneradmin\.ssh\known_hosts
+
+      # 使用 SSH 执行部署命令
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no Administrator@120.55.102.193 "cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant && git pull && npm install && npm run build && pm2 restart all"
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh -o StrictHostKeyChecking=no Administrator@120.55.102.193 "cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant\build && git pull origin master && ./deploy.sh"
