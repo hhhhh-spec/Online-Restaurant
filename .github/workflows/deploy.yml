@@ -34,6 +34,4 @@ jobs:
  # SSH连接到服务器并拉取代码
       - name: SSH into server and pull latest changes
         run: |
-          # 登录到服务器并导航到项目目录，执行 git pull 拉取最新更改
-          ssh -i C:\Users\runneradmin\.ssh\id_rsa -o StrictHostKeyChecking=no Administrator@120.55.102.193 "cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant && git pull origin master"
-
+ssh -v -i C:\Users\runneradmin\.ssh\id_rsa -o StrictHostKeyChecking=no Administrator@120.55.102.193 "cd C:\Users\Administrator\Desktop\my-app\Online-Restaurant && git pull origin master"
