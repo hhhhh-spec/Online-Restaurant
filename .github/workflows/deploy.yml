@@ -34,4 +34,4 @@ jobs:
       # 使用 SSH 执行部署命令
       - name: Deploy to server
         run: |
-          ssh Administrator@120.55.102.193 "echo 'SSH connection test'"
+          ssh -v Administrator@120.55.102.193 "echo 'SSH connection test'"
