@@ -44,4 +44,4 @@ jobs:
 
             # 重启 Nginx 服务
             sudo systemctl restart nginx || exit 1
-          EOF
+EOF
