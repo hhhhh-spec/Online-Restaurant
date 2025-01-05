@@ -31,13 +31,13 @@ jobs:
         run: |
          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@121.40.103.76 << 'EOF'
             # 确保目标目录存在
-            cd ~/workspace/myapp/Online-Restaurant || exit 1
+            cd /home/www/myapp/Online-Restaurant || exit 1
 
             # 拉取最新代码
             git pull origin master || exit 1
 
             # 安装依赖
-            npm install || exit 1
+            npm install --force || exit 1
 
             # 构建 React 应用
             npm run build || exit 1
