@@ -31,7 +31,7 @@ jobs:
         run: |
          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@121.40.103.76 << 'EOF'
             # 确保目标目录存在
-            cd ~/workspace/myapp || exit 1
+            cd ~/workspace/myapp/Online-Restaurant || exit 1
 
             # 拉取最新代码
             git pull origin master || exit 1
