@@ -29,4 +29,4 @@ jobs:
       # SSH 连接到服务器并拉取最新代码
       - name: SSH into server and pull latest changes
         run: |
-          ssh -v -i ~/.ssh/id_rsa 
+         ssh -v -i ~/.ssh/id_rsa root@121.40.103.76 "command"
