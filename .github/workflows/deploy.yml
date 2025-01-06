@@ -29,19 +29,4 @@ jobs:
       # SSH 连接到服务器并拉取最新代码
       - name: SSH into server and pull latest changes
         run: |
-         ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -o ServerAliveInterval=60 root@121.40.103.76 << 'EOF'
-            # 确保目标目录存在
-            cd /home/www/myapp/Online-Restaurant || exit 1
-
-            # 拉取最新代码
-            git pull origin master || exit 1
-
-            # 安装依赖
-            npm install --force --verbose || exit 1
-
-            # 构建 React 应用
-            npm run build || exit 1
-
-            # 重启 Nginx 服务
-            sudo systemctl restart nginx || exit 1
-            EOF
+         ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -o ServerAliveInterval=60 root@121.40.103.76 "cd /home/www/myapp/Online-Restaurant || exit 1 && git pull origin master || exit 1 && npm install --force --verbose || exit 1 && npm run build || exit 1 && sudo systemctl restart nginx || exit 1"
