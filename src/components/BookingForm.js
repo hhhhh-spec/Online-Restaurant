@@ -71,23 +71,23 @@ function BookingForm() {
     return (
         <>
         <ResponsiveGrid bgColor='#495E57' padding="10">
-            <Heading  id="booking-section" color="#F3CE14" size="2xl" p={4}>
-                Reservations
-            </Heading>
+                <Heading id="booking-section" color="#F3CE14" size="2xl" p={4}>
+                    Reservations
+                </Heading>
                 <form onSubmit={e => {
                     e.preventDefault();
                     formik.handleSubmit();
                 }}>
-                    <Grid  gap={6}
-             templateColumns={{
-                base: "1fr",           // 小屏幕时 1 列
-                lg: "repeat(2, 1fr)"   // 大屏幕时 2 列
-              }}
-              templateRows={{
-                base: "repeat(4, 1fr)",  // 小屏幕时 6 行
-                lg: "repeat(2, 1fr)"     // 大屏幕时 3 行
-              }}
-            >
+                    <Grid gap={6}
+                        templateColumns={{
+                            base: "1fr",           // 小屏幕时 1 列
+                            lg: "repeat(2, 1fr)"   // 大屏幕时 2 列
+                        }}
+                        templateRows={{
+                            base: "repeat(4, 1fr)",  // 小屏幕时 6 行
+                            lg: "repeat(2, 1fr)"     // 大屏幕时 3 行
+                        }}
+                    >
                         <FormControl isInvalid={formik.touched.resdate && formik.errors.resdate}>
                             <FormLabel htmlFor="date" color="white">Choose date</FormLabel>
                             <Input
@@ -146,7 +146,7 @@ function BookingForm() {
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor="occasion" color="white">Occasion</FormLabel>
-                            <Select id="occasion" name="occasion" {...formik.getFieldProps("occasion")} 
+                            <Select id="occasion" name="occasion" {...formik.getFieldProps("occasion")}
                             _invalid={{
                                 borderColor: '#EE9972'  // 错误时的边框颜色
                               }}
@@ -159,9 +159,7 @@ function BookingForm() {
                             </Select>
                         </FormControl>
                         </Grid>
-                </form>
-        </ResponsiveGrid>
-        <Flex justify="center" p="10">
+                        <Flex justify="center" p="10">
         <Button type="submit" bg="#F4CE14" color="#333333" pl="10" pr="10"
                             disabled={Object.keys(formik.errors).length > 0}
                             fontWeight="bold"
@@ -169,6 +167,8 @@ function BookingForm() {
                             Reserve a table
                         </Button>
                         </Flex>
+                </form>
+        </ResponsiveGrid>
         </>
     );
 }
