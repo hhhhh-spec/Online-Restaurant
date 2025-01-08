@@ -7,31 +7,26 @@ on:
 
 jobs:
   deploy:
-    runs-on: windows-latest  # 运行环境为 Windows
+    runs-on: ubuntu-latest 
     
     steps:
-      # Checkout代码
+      # Checkout 代码
       - name: Checkout code
         uses: actions/checkout@v2
 
       # 设置 SSH 密钥
       - name: Create SSH private key file
         run: |
-          New-Item -ItemType File -Force -Path "C:\Users\runneradmin\.ssh\id_rsa"
-          $privateKey = "${{ secrets.SSH_PRIVATE_KEY }}"
-          $privateKey | Set-Content -Path "C:\Users\runneradmin\.ssh\id_rsa" -Force
-
-      # 确保 SSH 密钥文件权限正确
-      - name: Fix SSH file permissions
-        run: |
-          icacls "C:\Users\runneradmin\.ssh\id_rsa" /inheritance:r /grant:r "runneradmin:F"  # 设置权限
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
       # 添加目标主机到 known_hosts 以避免第一次连接时的提示
       - name: Add server to known hosts
         run: |
-          ssh-keyscan -H 120.55.102.193 >> C:\Users\runneradmin\.ssh\known_hosts
+          ssh-keyscan -H 121.40.103.76 >> ~/.ssh/known_hosts
 
-      # 使用 SSH 执行部署命令
-      - name: Deploy to server
+      # SSH 连接到服务器并拉取最新代码
+      - name: SSH into server and pull latest changes
         run: |
-          ssh -i C:\\Users\\runneradmin/.ssh/id_rsa -o StrictHostKeyChecking=no Administrator@120.55.102.193 "echo 'SSH connection test'"
+         ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -o ServerAliveInterval=60 root@121.40.103.76 "cd /home/www/myapp/Online-Restaurant || exit 1 && git pull origin master || exit 1 && npm install --force --verbose || exit 1 && npm run build || exit 1 && sudo systemctl restart nginx || exit 1"
